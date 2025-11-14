@@ -1,0 +1,11 @@
+{
+  "name" : "test01_office",
+  "VIEWS" : [ ],
+  "TABLES" : [ {
+    "TABLE_NAME" : "dept01",
+    "TABLE_COMMENT" : "",
+    "IS_TEMPORARY" : "N"
+  } ],
+  "PROCEDURES" : [ ],
+  "FUNCTIONS" : [ ]
+}

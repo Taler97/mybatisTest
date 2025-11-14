@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.TeacherMapper">
+    <select id="selectAllTeachers" resultType="org.example.unity.Teacher" >
+        select * from teacher;
+    </select>
+    <insert id="insertTeacher" parameterType="org.example.unity.Teacher"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO teacher (name, age, job, sal, addr)
+        VALUES (#{name}, #{age}, #{job}, #{sal}, #{addr})
+    </insert>
+    <insert id="batchInsertTeachers">
+        INSERT INTO teacher (name, age, job, sal, addr) VALUES
+        <foreach collection="list" item="teacher" separator=",">
+            (#{teacher.name}, #{teacher.age}, #{teacher.job}, #{teacher.sal}, #{teacher.addr})
+        </foreach>
+    </insert>
+    <delete id="batchDelete" >
+        delete from teacher
+        where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectByCondition" resultType="org.example.unity.Teacher">
+        SELECT * FROM teacher
+        <where>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="job != null and job != ''">
+                AND job = #{job}
+            </if>
+            <if test="minAge != null">
+                AND age <![CDATA[>=]]> #{minAge}
+            </if>
+            <if test="maxAge != null">
+                AND age <![CDATA[<=]]> #{maxAge}
+            </if>
+            <if test="minSal != null">
+                AND sal <![CDATA[>=]]> #{minSal}
+            </if>
+            <if test="maxSal != null">
+                AND sal <![CDATA[<=]]> #{maxSal}
+            </if>
+            <if test="addr != null and addr != ''">
+                AND addr LIKE CONCAT('%', #{addr}, '%')
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>
