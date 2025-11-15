@@ -1,11 +1,10 @@
-package org.example.service;
+package org.example.utils;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.function.Function;
 
@@ -42,7 +41,7 @@ public class MyBatisUtil {
         try {
             T mapper = session.getMapper(mapperClass);
             int result = function.apply(mapper);
-            session.commit();            return result;
+            return result;
         } catch (Exception e) {
             session.rollback();
             throw e;
@@ -52,6 +51,7 @@ public class MyBatisUtil {
     }
     public static void commitAndCloseSession(SqlSession session){
         session.commit();
+        System.out.println("事务已提交");
         session.close();
         System.out.println("已关闭session");
     }

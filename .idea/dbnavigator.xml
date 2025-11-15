@@ -24,9 +24,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="f98d4e5a-f3fd-4bce-8f1f-e3692bc0c572" object-ref="schemas/mybatis_test/tables/teacher" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="f98d4e5a-f3fd-4bce-8f1f-e3692bc0c572" />
