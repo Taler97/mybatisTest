@@ -33,7 +33,7 @@ public class MyBatisUtil {
     }
     public static <T, R> R executeQuery(Class<T> mapperClass, Function<T, R> function) {
         try (SqlSession session = getSqlSession()) {
-            T mapper = session.getMapper(mapperClass);  // 这里使用泛型
+            T mapper = session.getMapper(mapperClass);
             return function.apply(mapper);
         }
     }

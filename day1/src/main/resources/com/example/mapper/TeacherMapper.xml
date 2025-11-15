@@ -51,4 +51,12 @@
         </where>
         ORDER BY id DESC
     </select>
+    <select id="getJilinAverageSalary" resultType="java.lang.Double">
+        SELECT AVG(sal) FROM teacher WHERE addr LIKE '吉林省%'
+    </select>
+    <update id="promoteSalesToManager">
+        UPDATE teacher
+        SET job = '销售经理'
+        WHERE job = '销售员' AND age > 30
+    </update>
 </mapper>

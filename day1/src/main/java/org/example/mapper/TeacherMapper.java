@@ -12,5 +12,6 @@ public interface TeacherMapper {
     int batchDelete(int[] ids);
     int batchInsert();
     List<Teacher> selectByCondition(Map<String, Object> params);
-
+    double getJilinAverageSalary();
+    void promoteSalesToManager();
 }
