@@ -18,6 +18,6 @@ public interface TeacherMapper {
     int batchDelete(int[] ids);
     int deleteByCondition(Map<String, Object> condition);
     List<Teacher> selectByCondition(Map<String, Object> params);
-    double getJilinAverageSalary(String province);
+    double getAverageSalaryByProvince(String province);
     int promoteSalesToManager();
 }

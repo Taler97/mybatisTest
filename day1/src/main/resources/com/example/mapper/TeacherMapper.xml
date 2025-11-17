@@ -44,8 +44,8 @@
         </where>
         ORDER BY id DESC
     </select>
-    <!--获取吉林市员工平均薪资 -->
-    <select id="getJilinAverageSalary" resultType="java.lang.Double">
+    <!--获取指定省份员工平均薪资 -->
+    <select id="getAverageSalaryByProvince" resultType="java.lang.Double">
         SELECT AVG(sal) FROM teacher WHERE addr LIKE #{province}
     </select>
     <!--提升30岁以上的销售员为销售经理 -->
@@ -143,7 +143,7 @@
 
         </where>
     </delete>
-    <!--批量删除int[] -->
+    <!--根据id批量删除Teachers -->
     <delete id="batchDelete">
         delete from teacher
         WHERE id IN
