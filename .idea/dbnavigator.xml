@@ -36,6 +36,7 @@
     <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$USER_HOME$/AppData/Local/Temp/dbn-16547525286468673395.mysql" connection-id="f98d4e5a-f3fd-4bce-8f1f-e3692bc0c572" session-id="MAIN" current-schema="mysql" />
     <mapping file-url="file://$USER_HOME$/AppData/Local/Temp/dbn-2602763277058410039.mysql" connection-id="f98d4e5a-f3fd-4bce-8f1f-e3692bc0c572" session-id="MAIN" current-schema="mysql" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">

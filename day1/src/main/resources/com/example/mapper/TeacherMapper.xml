@@ -3,12 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.example.mapper.TeacherMapper">
-    <!--展示所有Teacher-->
-    <select id="selectAllTeachers" resultType="org.example.unity.Teacher" >
-        select * from teacher;
-    </select>
     <!--单个插入Teacher-->
-    <insert id="insertTeacher" parameterType="org.example.unity.Teacher"
+    <insert id="insertTeacherById" parameterType="org.example.unity.Teacher"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO teacher (name, age, job, sal, addr)
         VALUES (#{name}, #{age}, #{job}, #{sal}, #{addr})
@@ -50,13 +46,34 @@
     </select>
     <!--获取吉林市员工平均薪资 -->
     <select id="getJilinAverageSalary" resultType="java.lang.Double">
-        SELECT AVG(sal) FROM teacher WHERE addr LIKE '吉林省%'
+        SELECT AVG(sal) FROM teacher WHERE addr LIKE #{province}
     </select>
     <!--提升30岁以上的销售员为销售经理 -->
     <update id="promoteSalesToManager">
         UPDATE teacher
         SET job = '销售经理'
         WHERE  age > 30 AND job='销售员'
+    </update>
+    <!-- 给定条件查找改数据行-->
+    <update id="updateTeacher" parameterType="java.util.Map">
+        UPDATE teacher
+        <set>
+            <foreach collection="updateFields" index="key" item="value" separator=",">
+                <if test="value != null">
+                    ${key} = #{value}
+                </if>
+            </foreach>
+        </set>
+        <where>
+            <foreach collection="conditionFields" index="key" item="value" separator="AND">
+                <if test="value != null">
+                    ${key} = #{value}
+                </if>
+            </foreach>
+            <if test="conditionFields == null or conditionFields.isEmpty()">
+                1 = 0
+            </if>
+        </where>
     </update>
     <!--条件删除 -->
     <delete id="deleteByCondition" >
@@ -125,5 +142,13 @@
             </if>
 
         </where>
+    </delete>
+    <!--批量删除int[] -->
+    <delete id="batchDelete">
+        delete from teacher
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
 </mapper>
