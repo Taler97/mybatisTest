@@ -2,10 +2,9 @@ package org.example.service;
 
 import org.apache.ibatis.session.SqlSession;
 import org.example.mapper.TeacherMapper;
-import org.example.unity.Teacher;
+import org.example.entity.Teacher;
 import org.example.utils.MyBatisUtil;
 
-import javax.xml.namespace.QName;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
