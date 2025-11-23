@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.UserMapper">
+
+  <!-- 基础用户映射 -->
+  <resultMap id="BaseResultMap" type="org.example.entity.User">
+    <id column="uid" property="uid" jdbcType="INTEGER"/>
+    <result column="uname" property="uname" jdbcType="VARCHAR"/>
+    <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+    <result column="lasttime" property="lasttime" jdbcType="TIMESTAMP"/>
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    uid, uname, pwd, lasttime
+  </sql>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from users
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="org.example.entity.User" useGeneratedKeys="true" keyProperty="uid">
+    insert into users (uname, pwd, lasttime)
+    values (#{uname,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{lasttime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from users
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from users
+  </select>
+
+  <update id="updateByPrimaryKey" parameterType="org.example.entity.User">
+    update users
+    set uname = #{uname,jdbcType=VARCHAR},
+    pwd = #{pwd,jdbcType=VARCHAR},
+    lasttime = #{lasttime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+
+  <!-- 自定义查询 -->
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from users
+    where uname = #{uname,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="getPwdByUname" >
+    select pwd from users
+    where uname=#{uname,jdbcType=VARCHAR}
+  </select>
+
+
+  <!-- 查询用户权限信息 -->
+  <select id="selectUserAuthInfo" parameterType="java.lang.String" resultMap="UserPermissionResultMap">
+    SELECT
+    u.uid,
+    u.uname,
+    r.rid,
+    r.rname,
+    p.pid,
+    p.pname,
+    p.url
+    FROM users u
+    LEFT JOIN users_role ur ON u.uid = ur.uid
+    LEFT JOIN role r ON ur.rid = r.rid
+    LEFT JOIN role_permission rp ON r.rid = rp.rid
+    LEFT JOIN permission p ON rp.pid = p.pid
+    WHERE u.uname = #{uname}
+  </select>
+
+  <!-- 用户权限DTO结果映射 -->
+  <resultMap id="UserPermissionResultMap" type="org.example.DTO.UserPermissionDTO">
+    <id property="uid" column="uid"/>
+    <result property="uname" column="uname"/>
+
+    <!-- 角色集合 -->
+    <collection property="roles" ofType="org.example.DTO.UserPermissionDTO$RoleInfo">
+      <id property="rid" column="rid"/>
+      <result property="rname" column="rname"/>
+    </collection>
+
+    <!-- 权限集合 -->
+    <collection property="permissions" ofType="org.example.DTO.UserPermissionDTO$PermissionInfo">
+      <id property="pid" column="pid"/>
+      <result property="pname" column="pname"/>
+      <result property="url" column="url"/>
+    </collection>
+  </resultMap>
+
+  <!-- 更新最后访问时间 -->
+  <update id="updateLastTime" parameterType="java.lang.Integer">
+    UPDATE users SET lasttime = NOW() WHERE uid = #{uid}
+  </update>
+</mapper>

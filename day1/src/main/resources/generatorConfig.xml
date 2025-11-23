@@ -4,14 +4,16 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
+
     <context id="MysqlTables" targetRuntime="MyBatis3Simple">
+
         <!-- 注释配置 -->
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
             <property name="suppressDate" value="true"/>
         </commentGenerator>
 
-        <!-- 修正：将属性正确设置为XML属性 -->
+        <!-- 数据库连接 -->
         <jdbcConnection
                 driverClass="com.mysql.cj.jdbc.Driver"
                 connectionURL="jdbc:mysql://localhost:3306/mybatis_test?useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf8"
@@ -31,7 +33,7 @@
         </javaModelGenerator>
 
         <!-- 生成SQL映射文件配置 -->
-        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="com.example.mapper" targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
@@ -42,26 +44,41 @@
 
         <!-- 表配置 -->
         <table tableName="users" domainObjectName="User">
-            <property name="useActualColumnNames" value="false"/>
+            <property name="useActualColumnNames" value="true"/>
             <generatedKey column="uid" sqlStatement="MySql" identity="true"/>
+            <!-- 显式指定所有字段 -->
+            <columnOverride column="uid" property="uid"/>
+            <columnOverride column="uname" property="uname"/>
+            <columnOverride column="pwd" property="pwd"/>
+            <columnOverride column="lasttime" property="lasttime"/>
         </table>
 
         <table tableName="role" domainObjectName="Role">
-            <property name="useActualColumnNames" value="false"/>
+            <property name="useActualColumnNames" value="true"/>
             <generatedKey column="rid" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="rid" property="rid"/>
+            <columnOverride column="rname" property="rname"/>
         </table>
 
         <table tableName="permission" domainObjectName="Permission">
-            <property name="useActualColumnNames" value="false"/>
+            <property name="useActualColumnNames" value="true"/>
             <generatedKey column="pid" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="pid" property="pid"/>
+            <columnOverride column="pname" property="pname"/>
+            <columnOverride column="url" property="url"/>
         </table>
 
         <table tableName="users_role" domainObjectName="UserRole">
-            <property name="useActualColumnNames" value="false"/>
+            <property name="useActualColumnNames" value="true"/>
+            <columnOverride column="uid" property="uid"/>
+            <columnOverride column="rid" property="rid"/>
         </table>
 
         <table tableName="role_permission" domainObjectName="RolePermission">
-            <property name="useActualColumnNames" value="false"/>
+            <property name="useActualColumnNames" value="true"/>
+            <columnOverride column="rid" property="rid"/>
+            <columnOverride column="pid" property="pid"/>
         </table>
+
     </context>
 </generatorConfiguration>

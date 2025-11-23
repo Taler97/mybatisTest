@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="org.example.entity.UserRole">
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <id column="rid" jdbcType="INTEGER" property="rid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from users_role
+    where uid = #{uid,jdbcType=INTEGER}
+      and rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.example.entity.UserRole">
+    insert into users_role (uid, rid)
+    values (#{uid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select uid, rid
+    from users_role
+  </select>
+</mapper>

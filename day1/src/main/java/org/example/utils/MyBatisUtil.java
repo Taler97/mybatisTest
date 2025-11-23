@@ -25,7 +25,6 @@ public class MyBatisUtil {
     public static SqlSession getSqlSession() {
         SqlSession session = sqlSessionFactory.openSession();
         if (session!=null) {
-            System.out.println("成功获取session");
             return session;}
     return null;
 
