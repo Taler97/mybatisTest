@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.StaffMapper">
+
+  <resultMap id="BaseResultMap" type= "org.example.entity.Staff">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="sal" jdbcType="DECIMAL" property="sal" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, name, addr, age, job, sal
+  </sql>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Staff
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="org.example.entity.Staff" useGeneratedKeys="true" keyProperty="id">
+    insert into Staff (name, addr, age, job, sal)
+    values (#{name,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER},
+    #{job,jdbcType=VARCHAR}, #{sal,jdbcType=DECIMAL})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="org.example.entity.Staff">
+    update Staff
+    set name = #{name,jdbcType=VARCHAR},
+    addr = #{addr,jdbcType=VARCHAR},
+    age = #{age,jdbcType=INTEGER},
+    job = #{job,jdbcType=VARCHAR},
+    sal = #{sal,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="raiseSalaryByAge">
+    UPDATE Staff
+    SET sal = sal + #{amount}
+    WHERE age >= #{minAge}
+  </update>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from Staff
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByAge" resultMap="BaseResultMap">
+    select from staff where age=#{age}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from Staff
+  </select>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    INSERT INTO Staff (name, addr, age, job, sal)
+    VALUES
+    <foreach collection="list" item="staff" separator=",">
+      (#{staff.name}, #{staff.addr}, #{staff.age}, #{staff.job}, #{staff.sal})
+    </foreach>
+  </insert>
+
+</mapper>
