@@ -42,42 +42,17 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <!-- 表配置 -->
-        <table tableName="users" domainObjectName="User">
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="uid" sqlStatement="MySql" identity="true"/>
-            <!-- 显式指定所有字段 -->
-            <columnOverride column="uid" property="uid"/>
-            <columnOverride column="uname" property="uname"/>
-            <columnOverride column="pwd" property="pwd"/>
-            <columnOverride column="lasttime" property="lasttime"/>
-        </table>
 
-        <table tableName="role" domainObjectName="Role">
+        <table catalog="mybatis_test" schema="mybatis_test" tableName="Staff" domainObjectName="Staff">
             <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="rid" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="rid" property="rid"/>
-            <columnOverride column="rname" property="rname"/>
-        </table>
-
-        <table tableName="permission" domainObjectName="Permission">
-            <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="pid" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="pid" property="pid"/>
-            <columnOverride column="pname" property="pname"/>
-            <columnOverride column="url" property="url"/>
-        </table>
-
-        <table tableName="users_role" domainObjectName="UserRole">
-            <property name="useActualColumnNames" value="true"/>
-            <columnOverride column="uid" property="uid"/>
-            <columnOverride column="rid" property="rid"/>
-        </table>
-
-        <table tableName="role_permission" domainObjectName="RolePermission">
-            <property name="useActualColumnNames" value="true"/>
-            <columnOverride column="rid" property="rid"/>
-            <columnOverride column="pid" property="pid"/>
+            <property name="ignoreQualifiersAtRuntime" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" property="id"/>
+            <columnOverride column="name" property="name"/>
+            <columnOverride column="addr" property="addr"/>
+            <columnOverride column="age" property="age"/>
+            <columnOverride column="job" property="job"/>
+            <columnOverride column="sal" property="sal"/>
         </table>
 
     </context>

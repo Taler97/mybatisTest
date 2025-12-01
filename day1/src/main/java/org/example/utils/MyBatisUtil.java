@@ -1,5 +1,6 @@
 package org.example.utils;
 
+import lombok.Getter;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -9,6 +10,7 @@ import java.io.InputStream;
 import java.util.function.Function;
 
 public class MyBatisUtil {
+    @Getter
     private static SqlSessionFactory sqlSessionFactory;
 
     static {
@@ -23,10 +25,7 @@ public class MyBatisUtil {
     }
 
     public static SqlSession getSqlSession() {
-        SqlSession session = sqlSessionFactory.openSession();
-        if (session!=null) {
-            return session;}
-    return null;
+        return sqlSessionFactory.openSession();
 
     }
     public static <T, R> R executeQuery(Class<T> mapperClass, Function<T, R> function) {
